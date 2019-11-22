@@ -14,9 +14,10 @@ class ViewController: UIViewController {
     
     var contatos: [NSManagedObject] = []
     
+    @IBOutlet weak var tbvContatos: UITableView!
+    
     @IBAction func btnCadastrar(_ sender: Any) {
         //abre a tela de cadastro com os campos em branco para cadastro de um novo contato
-        //TO-DO
         let myVC = storyboard?.instantiateViewController(withIdentifier: "SecondVC") as! SecondVC
         navigationController?.pushViewController(myVC, animated: true)
     }

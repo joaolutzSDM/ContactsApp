@@ -10,11 +10,11 @@ import UIKit
 
 import CoreData
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDelegate {
     
     var contatos: [NSManagedObject] = []
     
-    @IBOutlet weak var tbvContatos: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     
     @IBAction func btnCadastrar(_ sender: Any) {
         //abre a tela de cadastro com os campos em branco para cadastro de um novo contato
@@ -25,6 +25,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        title = "Agenda de Contatos"
+        tableView.register(UITableViewCell.self,
+                           forCellReuseIdentifier: "myCell")
+        tableView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,6 +54,14 @@ class ViewController: UIViewController {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let contato = contatos[indexPath.row]
+        let myVC = storyboard?.instantiateViewController(withIdentifier: "SecondVC") as! SecondVC
+        myVC.contato = contato
+        navigationController?.pushViewController(myVC, animated: true)
+    }
+    
 }
 
 // MARK: - UITableViewDataSource
@@ -70,13 +82,6 @@ extension ViewController: UITableViewDataSource {
                 person.value(forKeyPath: "nome") as? String
             cell.detailTextLabel?.text = person.value(forKeyPath: "telefone") as? String
             return cell
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let contato = contatos[indexPath.row]
-        let myVC = storyboard?.instantiateViewController(withIdentifier: "SecondVC") as! SecondVC
-        myVC.contato = contato
-        navigationController?.pushViewController(myVC, animated: true)
     }
 
 }

@@ -34,6 +34,7 @@ class SecondVC: UIViewController {
         } else {
             update()
         }
+        navigationController?.popViewController(animated: true)
     }
     
     func save() {
@@ -87,7 +88,6 @@ class SecondVC: UIViewController {
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }
-        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func btnExcluir(_ sender: Any) {
